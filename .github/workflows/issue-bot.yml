@@ -1,0 +1,21 @@
+name: Issue-Bot
+on:
+  issues:
+    types: [opened, labeled]
+jobs:
+  respond-to-chatbot-query:
+    if: github.event.label.name == 'chatbot-query'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
+      - name: Instalar dependencias
+        run: pip install -r requirements.txt
+      - name: Responder issue
+        env:
+          CLAUDE_API_KEY: ${{ secrets.CLAUDE_API_KEY }}
+        run: |
+          python .github/issue_bot.py "${{ github.event.issue.title }}" "${{ github.event.issue.body }}"

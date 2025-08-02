@@ -1,0 +1,230 @@
+{
+  "metadata": {
+    "generated_at": "2025-07-31T15:00-05:00",
+    "compiler": "OpenAI o3",
+    "scope": "Información pública verificada hasta 31-jul-2025"
+  },
+
+  "company_profile": {
+    "legal_name": "Vastec S.A.",
+    "brand_name": "Vastec",
+    "ruc": "20602334237",
+    "industry_classification": "CIIU 465 – Comerciantes al por Mayor de Equipos y Suministros para Uso Profesional y Comercial",
+    "date_incorporation": "2017-08-01",
+    "brand_first_use": "2005-07-08",
+    "parent_entity": "Infordata S.A.C."
+  },
+
+  "headquarters": {
+    "address": "Av. Arequipa 860, Urb. Santa Beatriz, Cercado de Lima 15046, Lima, Perú",
+    "local_phone": "+51 1 619-6290",
+    "support_phone": "+51 1 619-6810",
+    "email_sales": "ventas@vastec.com.pe",
+    "email_support": "tecnicos@vastec.com.pe",
+    "website": "https://www.vastec.com.pe"
+  },
+
+  "mission_vision": {
+    "mission": "Ayudar a nuestros clientes a alcanzar sus metas ofreciendo productos y soluciones innovadoras que se ajustan a las necesidades de los sectores empresarial, estatal, educativo y familiar del mercado local.",
+    "vision": "Ser una marca elegida por nuestra innovación tecnológica, soluciones, productos y servicios de calidad, así como por nuestra contribución a la comunidad y el medio ambiente."
+  },
+
+  "leadership": {
+    "current_general_manager": "Juan Vicente",
+    "other_key_executives": [
+      { "name": "Ing. Vladimir Pérez", "position": "Jefe de I+D" }
+    ],
+    "former_general_managers": [
+      { "name": "Renán Agüero", "tenure": "≈2014-2016" }
+    ]
+  },
+
+  "certifications": [
+    "ISO 9001:2015 (gestión de calidad)",
+    "ENERGY STAR Partner (computadoras certificadas)",
+    "Programa RAEE (gestión de residuos electrónicos)"
+  ],
+
+  "alliances": [
+    "Intel",
+    "NVIDIA",
+    "AMD",
+    "Ingram Micro (mayorista exclusivo en Perú)"
+  ],
+
+  "products_services": {
+    "computo": ["Computadoras de escritorio", "Laptops", "PC Gamer", "All-in-One"],
+    "soluciones_ti": ["Servidores", "Workstations (DesignPro, Station Pro, SmartPRO)"],
+    "perifericos": ["Monitores", "Pantallas interactivas VAIP8"],
+    "caracteristicas_clave": {
+      "procesadores": ["Intel Core 10-14ª gen", "Intel Xeon", "AMD Ryzen/Threadripper Pro"],
+      "ram": "4 GB – 512 GB DDR4/DDR5/ECC",
+      "almacenamiento": "SSD 120 GB – 2 TB NVMe + HDD hasta 8 TB",
+      "gpu": ["Intel Iris/UHD", "NVIDIA RTX 30/40", "NVIDIA Professional (A4000, A5000)"],
+      "garantia": "12-36 meses on-site"
+    }
+  },
+
+  "market_presence": {
+    "primary_segments": [
+      "Sector público (Acuerdo Marco EXT-CE-2022-5)",
+      "Corporativo privado",
+      "Profesionales creativos e ingeniería",
+      "Consumidores/familias",
+      "Gaming"
+    ],
+    "market_share": {
+      "pc_market_share_peru_brand_local": "2 % (ene-abr 2022)",
+      "workstation_sales_growth": "Volumen triplicado (2019)"
+    },
+    "sales_growth_cagr_2015_2020": "≈30 %"
+  },
+
+  "distribution_channels": {
+    "strategy": "100 % canal indirecto",
+    "national_distributor": "Ingram Micro Perú S.A.C.",
+    "retail_partners": ["Promart", "Falabella", "PlazaVea", "Oechsle", "MercadoLibre"],
+    "authorized_reseller_network": "Cobertura nacional (n.º no divulgado)"
+  },
+
+  "corporate_history": [
+    { "date": "2005-07-08", "event": "Lanzamiento de la marca Vastec por Infordata" },
+    { "date": "2016-08-03", "event": "Alianza de distribución exclusiva con Ingram Micro" },
+    { "date": "2017-08-01", "event": "Constitución legal de Vastec S.A." },
+    { "date": "2019-09-11", "event": "Lanzamiento WorkStation DesignPro (Intel Xeon / NVIDIA Quadro)" },
+    { "date": "2019-11-25", "event": "Presentación PCs All-in-One PrimeOne" },
+    { "date": "2022-07-01", "event": "Reconocimiento como marca nacional más requerida en sector público" },
+    { "date": "2023-10-15", "event": "Actualización de línea All-in-One (Intel 12-13ª gen)" },
+    { "date": "2025-02-25", "event": "Webinars técnicos con NVIDIA, Intel y AMD" }
+  ],
+
+  "financial_highlights": {
+    "revenue_growth_estimate": "≈30 % anual (2015-2020, declarado)",
+    "key_metrics": {
+      "capital_social": "ND",
+      "empleados": "ND"
+    }
+  },
+
+  "contact_information": {
+    "sales": {
+      "phone": "+51 1 619-6290",
+      "email": "ventas@vastec.com.pe",
+      "hours": "L-V 08:00-18:00"
+    },
+    "technical_support": {
+      "phone": "+51 1 619-6810",
+      "email": "tecnicos@vastec.com.pe",
+      "hours": "L-V 08:00-17:30"
+    }
+  },
+
+  "limitations": [
+    "Sin estados financieros auditados públicos; crecimiento basado en declaraciones ejecutivas.",
+    "Sin información oficial sobre número de empleados ni estructura accionaria.",
+    "La cuota de mercado citada corresponde a un período específico (ene-abr 2022) y puede haber variado."
+  ],
+
+  "frequently_asked_questions": [
+    {
+      "id": 1,
+      "question": "¿Qué es Vastec S.A. y a qué se dedica?",
+      "answer": "Empresa peruana que diseña, ensambla y distribuye equipos de cómputo (laptops, desktops, workstations, servidores, monitores) y soluciones tecnológicas."
+    },
+    {
+      "id": 2,
+      "question": "¿Dónde se encuentran ubicadas las oficinas de Vastec?",
+      "answer": "Av. Arequipa 860, Urb. Santa Beatriz, Cercado de Lima (15046), Perú."
+    },
+    {
+      "id": 3,
+      "question": "¿Cómo contactar al área de ventas o soporte técnico?",
+      "answer": "Ventas: +51 1 619-6290 / ventas@vastec.com.pe (L-V 08:00-18:00). Soporte: +51 1 619-6810 / tecnicos@vastec.com.pe (L-V 08:00-17:30)."
+    },
+    {
+      "id": 4,
+      "question": "¿Qué tipo de productos ofrece Vastec?",
+      "answer": "Laptops, computadoras de escritorio, PC Gamer, All-in-One, servidores, workstations y periféricos (monitores, pantallas interactivas)."
+    },
+    {
+      "id": 5,
+      "question": "¿Los productos Vastec tienen garantía?",
+      "answer": "Sí, garantía on-site de 12, 24 o 36 meses según modelo y tipo de cliente."
+    },
+    {
+      "id": 6,
+      "question": "¿Dónde comprar productos Vastec?",
+      "answer": "A través de su canal de distribución autorizado: Ingram Micro Perú y retail (Promart, Falabella, MercadoLibre, etc.)."
+    },
+    {
+      "id": 7,
+      "question": "¿Vastec vende directamente al público?",
+      "answer": "No, sólo mediante distribuidores autorizados y mayoristas."
+    },
+    {
+      "id": 8,
+      "question": "¿Qué certificaciones posee Vastec?",
+      "answer": "ISO 9001:2015, ENERGY STAR y programa RAEE."
+    },
+    {
+      "id": 9,
+      "question": "¿Qué procesadores y componentes usan los productos Vastec?",
+      "answer": "Intel Core i3-i9, Intel Xeon, AMD Ryzen/Threadripper Pro, GPUs NVIDIA GeForce/Quadro RTX, hasta 512 GB RAM y almacenamiento SSD/HDD configurable."
+    },
+    {
+      "id": 10,
+      "question": "¿Qué sectores atiende Vastec principalmente?",
+      "answer": "Sector público, empresas privadas, profesionales creativos/ingeniería, consumidores y mercado gamer."
+    },
+    {
+      "id": 11,
+      "question": "¿Vastec realiza ensamblaje local?",
+      "answer": "Sí, todos los productos se ensamblan en Perú bajo ISO 9001."
+    },
+    {
+      "id": 12,
+      "question": "¿Puedo personalizar una computadora Vastec?",
+      "answer": "Sí, configuraciones flexibles de RAM, almacenamiento, procesador y GPU, especialmente en líneas WorkStation y Gamer."
+    },
+    {
+      "id": 13,
+      "question": "¿Diferencias entre DesignPro, Station Pro y SmartPRO?",
+      "answer": "DesignPro: estaciones de trabajo fijas; Station Pro: PCs de escritorio profesionales; SmartPRO: workstations portátiles de alto rendimiento."
+    },
+    {
+      "id": 14,
+      "question": "¿Vastec tiene programas de reciclaje?",
+      "answer": "Sí, pertenece al programa RAEE de gestión de residuos electrónicos."
+    },
+    {
+      "id": 15,
+      "question": "¿Qué alianzas tecnológicas tiene Vastec?",
+      "answer": "Intel, NVIDIA, AMD e Ingram Micro."
+    },
+    {
+      "id": 16,
+      "question": "¿Qué soporte post-venta ofrece Vastec?",
+      "answer": "Soporte telefónico y presencial, repuestos locales y asesoría técnica."
+    },
+    {
+      "id": 17,
+      "question": "¿Vastec ofrece soluciones empresariales?",
+      "answer": "Sí, hardware y soporte para empresas, educación y sector público."
+    },
+    {
+      "id": 18,
+      "question": "¿Vastec organiza capacitaciones?",
+      "answer": "Sí, webinars y eventos técnicos en alianza con Intel, NVIDIA y AMD."
+    },
+    {
+      "id": 19,
+      "question": "¿Cómo ser distribuidor autorizado?",
+      "answer": "Contactar al área comercial (ventas@vastec.com.pe) y seguir el proceso de afiliación."
+    },
+    {
+      "id": 20,
+      "question": "¿Dónde consultar el catálogo actualizado?",
+      "answer": "Disponible en https://www.vastec.com.pe/catalogo"
+    }
+  ]
+}

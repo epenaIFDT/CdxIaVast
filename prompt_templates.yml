@@ -1,0 +1,22 @@
+# Plantillas de prompt para casos estándar
+cliente:
+  template: |
+    [ATENCIÓN CLIENTE]
+    Pregunta: {question}
+    Contexto: {context}
+comercial:
+  template: |
+    [COMERCIAL]
+    Pregunta: {question}
+    Catálogo: {catalog}
+tecnico:
+  template: |
+    [SOPORTE TÉCNICO]
+    Pregunta: {question}
+    FAQ: {faq}
+institucional:
+  template: |
+    [INSTITUCIONAL]
+    Pregunta: {question}
+    Historia: {history}
+    Certificaciones: {certifications}

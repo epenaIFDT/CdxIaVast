@@ -1,0 +1,35 @@
+name: CI
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+      - name: Lint
+        run: ruff . || flake8 .
+      - name: Test
+        run: pytest -q
+      - name: Coverage
+        run: |
+          pip install coverage
+          coverage run -m pytest
+          coverage report -m
+          coverage json
+      - name: Check coverage >= 80%
+        run: |
+          COVERAGE=$(jq .totals.percent_covered coverage.json)
+          echo "Coverage: $COVERAGE%"
+          if (( $(echo "$COVERAGE < 80" | bc -l) )); then
+            echo "Coverage too low! ($COVERAGE%)"
+            exit 1
+          fi
