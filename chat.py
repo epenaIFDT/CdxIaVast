@@ -2,12 +2,6 @@ from utils import sanitize_input
 import os
 import uuid
 from utils_prompt import load_templates, build_prompt_with_template
-def sanitize_input(text: str) -> str:
-    # Elimina etiquetas HTML/JS y caracteres especiales
-    text = re.sub(r'<.*?>', '', text)
-    text = re.sub(r'["\'`]', '', text)
-    text = re.sub(r'[\r\n]', ' ', text)
-    return text.strip()
 """
 CLI principal para Chatbot Vastec
 """
@@ -105,6 +99,12 @@ def main():
             categoria = detect_intent(user_input)
             console.print(f"[blue]Categoría detectada:[/blue] [bold]{categoria}[/bold]")
             pregunta_saneada = sanitize_input(user_input)
+            from utils_search import buscar_info_rapida
+            respuesta_directa = buscar_info_rapida(knowledge, pregunta_saneada)
+            if respuesta_directa:
+                console.print(f"[bold]Respuesta:[/bold] [italic]{respuesta_directa}[/italic]", style="green")
+                log_interaction(session_id, datetime.now(), pregunta_saneada, categoria, respuesta_directa)
+                continue
             if templates:
                 prompt = build_prompt_with_template(pregunta_saneada, knowledge, templates)
             else:

@@ -2,15 +2,18 @@
 Cliente para la API Claude Haiku 3.5
 """
 
+
 import os
 import time
 import requests
 from typing import Optional
+from dotenv import load_dotenv
 
 CLAUDE_API_URL = "https://api.anthropic.com/v1/messages"
 
 class ClaudeClient:
     def __init__(self, api_key: Optional[str] = None):
+        load_dotenv()
         self.api_key = api_key or os.getenv("CLAUDE_API_KEY")
         if not self.api_key:
             raise RuntimeError("No se encontró la clave CLAUDE_API_KEY.")
@@ -18,10 +21,11 @@ class ClaudeClient:
     def send_message(self, prompt: str, max_tokens: int = 512, retries: int = 3, backoff: float = 1.0) -> str:
         headers = {
             "x-api-key": self.api_key,
-            "content-type": "application/json"
+            "content-type": "application/json",
+            "anthropic-version": "2023-06-01"
         }
         payload = {
-            "model": "claude-3-haiku-20240229",
+            "model": "claude-3-haiku-20240307",
             "max_tokens": max_tokens,
             "messages": [
                 {"role": "user", "content": prompt}
@@ -32,9 +36,23 @@ class ClaudeClient:
                 resp = requests.post(CLAUDE_API_URL, headers=headers, json=payload, timeout=10)
                 resp.raise_for_status()
                 data = resp.json()
-                return data.get("content", "[Sin respuesta]")
+                # Claude API responde con 'content' dentro de 'content' o 'choices', según versión
+                if "content" in data:
+                    return data["content"]
+                elif "choices" in data and data["choices"]:
+                    return data["choices"][0]["message"]["content"]
+                return "[Sin respuesta: formato desconocido]"
             except Exception as e:
+                # Si es error HTTP, mostrar el cuerpo para depuración
+                if hasattr(e, 'response') and e.response is not None:
+                    try:
+                        error_body = e.response.text
+                    except Exception:
+                        error_body = str(e)
+                    msg = f"Error al consultar Claude: {e} | Respuesta: {error_body}"
+                else:
+                    msg = f"Error al consultar Claude: {e}"
                 if attempt < retries - 1:
                     time.sleep(backoff * (2 ** attempt))
                 else:
-                    raise RuntimeError(f"Error al consultar Claude: {e}")
+                    raise RuntimeError(msg)

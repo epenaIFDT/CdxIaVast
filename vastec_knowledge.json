@@ -1,7 +1,7 @@
 {
   "metadata": {
     "generated_at": "2025-07-31T15:00-05:00",
-    "compiler": "OpenAI o3",
+    "compiler": "M0n0",
     "scope": "Información pública verificada hasta 31-jul-2025"
   },
 
@@ -35,7 +35,7 @@
       { "name": "Ing. Vladimir Pérez", "position": "Jefe de I+D" }
     ],
     "former_general_managers": [
-      { "name": "Renán Agüero", "tenure": "≈2014-2016" }
+      { "name": "Paola", "tenure": "≈2014-2016" }
     ]
   },
 

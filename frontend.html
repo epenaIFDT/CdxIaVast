@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Chatbot Vastec Web</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+  <style>
+    body {
+      font-family: 'Segoe UI', 'Roboto', Arial, sans-serif;
+      background: linear-gradient(135deg, #0f2027 0%, #2c5364 100%);
+      margin: 0;
+      min-height: 100vh;
+    }
+    .container {
+      max-width: 540px;
+      margin: 48px auto;
+      background: #fff;
+      padding: 32px 28px 24px 28px;
+      border-radius: 16px;
+      box-shadow: 0 4px 24px #0f2027cc;
+      border: 1px solid #e0e0e0;
+    }
+    h2 {
+      color: #0f2027;
+      font-size: 2rem;
+      font-weight: 700;
+      margin-bottom: 8px;
+      letter-spacing: 1px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    h2 .fa-robot {
+      color: #0077cc;
+      font-size: 1.5rem;
+    }
+    label {
+      font-size: 1.08rem;
+      color: #2c5364;
+      font-weight: 500;
+    }
+    input[type="text"] {
+      font-size: 1.08rem;
+      padding: 8px 12px;
+      border-radius: 6px;
+      border: 1px solid #b0b0b0;
+      width: 100%;
+      margin-top: 4px;
+      margin-bottom: 12px;
+      transition: border-color 0.2s;
+    }
+    input[type="text"]:focus {
+      border-color: #0077cc;
+      outline: none;
+    }
+    button {
+      font-size: 1.08rem;
+      padding: 8px 18px;
+      border-radius: 6px;
+      border: none;
+      background: linear-gradient(90deg, #0077cc 0%, #2c5364 100%);
+      color: #fff;
+      font-weight: 600;
+      cursor: pointer;
+      margin-bottom: 4px;
+      transition: background 0.2s;
+    }
+    button:hover {
+      background: linear-gradient(90deg, #2c5364 0%, #0077cc 100%);
+    }
+    #historial {
+      margin-top: 24px;
+      max-height: 350px;
+      overflow-y: auto;
+      background: #f8fafd;
+      border-radius: 8px;
+      border: 1px solid #e0e0e0;
+      padding: 12px;
+      box-shadow: 0 1px 4px #2c536420;
+    }
+    .chat-item {
+      margin-bottom: 18px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid #e0e0e0;
+    }
+    .chat-item:last-child {
+      border-bottom: none;
+    }
+    .user {
+      color: #0f2027;
+      font-weight: bold;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .user .fa-user {
+      color: #0077cc;
+    }
+    .bot {
+      color: #0077cc;
+      font-weight: bold;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .bot .fa-robot {
+      color: #2c5364;
+    }
+    .respuesta {
+      color: #222;
+      margin-left: 24px;
+    }
+    #consultas-frecuentes {
+      margin-top: 24px;
+      background: #e9f7fe;
+      border-radius: 8px;
+      padding: 16px 14px;
+      box-shadow: 0 1px 4px #0077cc22;
+      border: 1px solid #cce6ff;
+    }
+    #consultas-frecuentes h3 {
+      color: #0077cc;
+      font-size: 1.15rem;
+      margin-bottom: 8px;
+      font-weight: 600;
+    }
+    #consultas-frecuentes ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    #consultas-frecuentes li {
+      background: #fff;
+      border: 1px solid #cce6ff;
+      border-radius: 6px;
+      padding: 7px 12px;
+      color: #0077cc;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s;
+      box-shadow: 0 1px 2px #0077cc11;
+    }
+    #consultas-frecuentes li:hover {
+      background: #0077cc;
+      color: #fff;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2><i class="fa-solid fa-robot"></i> Chatbot Vastec Web</h2>
+    <form id="form">
+      <label for="pregunta">Escribe tu consulta:</label>
+      <input type="text" id="pregunta" name="pregunta" required autocomplete="off" placeholder="Ej: ¿Qué productos ofrece Vastec?">
+      <div style="display:flex;gap:10px;margin-bottom:8px;">
+        <button type="submit"><i class="fa-solid fa-paper-plane"></i> Consultar</button>
+        <button type="button" id="limpiar"><i class="fa-solid fa-broom"></i> Limpiar chat</button>
+        <button type="button" id="exportar"><i class="fa-solid fa-file-export"></i> Exportar historial</button>
+      </div>
+    </form>
+    <div id="consultas-frecuentes">
+      <h3><i class="fa-solid fa-lightbulb"></i> Consultas frecuentes</h3>
+      <ul id="ejemplos">
+        <!-- Los ejemplos se insertan dinámicamente -->
+      </ul>
+    </div>
+    <div id="historial"></div>
+  </div>
+  <!-- Scripts al final para asegurar carga del DOM -->
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const form = document.getElementById('form');
+      const historialDiv = document.getElementById('historial');
+      const ejemplosUl = document.getElementById('ejemplos');
+      let historial = [];
+
+      // Ejemplos dinámicos y empresariales
+      const ejemplos = [
+        '¿Qué productos ofrece Vastec?',
+        '¿Cuál es la garantía de los productos?',
+        '¿Dónde se ubica la oficina principal?',
+        '¿Quién es el gerente general?',
+        '¿Cuáles son los canales de distribución?',
+        '¿Qué certificaciones tiene la empresa?',
+        '¿Cómo contactar a ventas o soporte técnico?',
+        '¿Qué alianzas tecnológicas tiene Vastec?',
+        '¿Qué sectores atiende principalmente?',
+        '¿Cuáles son los valores corporativos?',
+        '¿Qué soluciones empresariales ofrecen?',
+        '¿Cómo solicitar una cotización?',
+        '¿Qué reconocimientos ha recibido Vastec?',
+        '¿Cuál es la misión y visión de la empresa?',
+        '¿Qué servicios de postventa tienen?'
+      ];
+
+      function renderEjemplos() {
+        ejemplosUl.innerHTML = '';
+        ejemplos.forEach(ej => {
+          const li = document.createElement('li');
+          li.textContent = ej;
+          li.onclick = () => {
+            document.getElementById('pregunta').value = ej;
+            document.getElementById('pregunta').focus();
+          };
+          ejemplosUl.appendChild(li);
+        });
+      }
+      renderEjemplos();
+
+      function renderHistorial() {
+        historialDiv.innerHTML = historial.map(item =>
+          `<div class="chat-item">
+            <div class="user"><i class="fa-solid fa-user"></i> ${item.timestamp} Tú:</div>
+            <div class="respuesta">${item.pregunta}</div>
+            <div class="bot"><i class="fa-solid fa-robot"></i> ${item.timestamp} Chatbot:</div>
+            <div class="respuesta">${marked.parse(item.respuesta)}</div>
+          </div>`
+        ).join('');
+        // Autoscroll robusto
+        setTimeout(() => {
+          historialDiv.scrollTop = historialDiv.scrollHeight;
+        }, 50);
+      }
+      renderHistorial();
+
+      // Validación de entrada y accesibilidad
+      form.onsubmit = async (e) => {
+        e.preventDefault();
+        const preguntaInput = document.getElementById('pregunta');
+        const pregunta = preguntaInput.value.trim();
+        if (!pregunta) {
+          preguntaInput.focus();
+          return;
+        }
+        const timestamp = new Date().toLocaleTimeString();
+        historial.push({ pregunta, respuesta: 'Consultando...', timestamp });
+        renderHistorial();
+        try {
+          // URL absoluta del backend FastAPI en Codespaces
+          const apiUrl = 'https://jubilant-carnival-j6vpgx5q4vrcppj-8000.app.github.dev/consulta';
+          const res = await fetch(apiUrl, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ pregunta })
+          });
+          if (!res.ok) {
+            throw new Error('Error HTTP: ' + res.status);
+          }
+          let data;
+          try {
+            data = await res.json();
+          } catch (jsonErr) {
+            historial[historial.length - 1].respuesta = 'Respuesta inválida del servidor.';
+            renderHistorial();
+            preguntaInput.value = '';
+            return;
+          }
+          if (historial.length > 0) {
+            historial[historial.length - 1].respuesta = data.respuesta || 'Sin respuesta.';
+          }
+          renderHistorial();
+        } catch (err) {
+          if (historial.length > 0) {
+            historial[historial.length - 1].respuesta = 'Error al consultar la API.';
+          }
+          renderHistorial();
+        }
+        preguntaInput.value = '';
+        preguntaInput.focus();
+      };
+
+      // Botón limpiar chat
+      document.getElementById('limpiar').onclick = () => {
+        historial = [];
+        renderHistorial();
+        document.getElementById('pregunta').focus();
+      };
+
+      // Botón exportar historial
+      document.getElementById('exportar').onclick = () => {
+        if (historial.length === 0) {
+          alert('No hay historial para exportar.');
+          return;
+        }
+        const texto = historial.map(item =>
+          `${item.timestamp} Tú: ${item.pregunta}\n${item.timestamp} Chatbot: ${item.respuesta.replace(/<[^>]+>/g, '')}\n`
+        ).join('\n');
+        const blob = new Blob([texto], { type: 'text/plain' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'historial_chatbot.txt';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+      };
+    });
+  </script>
