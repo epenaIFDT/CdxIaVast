@@ -1,7 +1,7 @@
-from utils import sanitize_input
+from .utils import sanitize_input
 import os
 import uuid
-from utils_prompt import load_templates, build_prompt_with_template
+from .utils_prompt import load_templates, build_prompt_with_template
 """
 CLI principal para Chatbot Vastec
 """
@@ -12,9 +12,9 @@ import sys
 from rich.console import Console
 from rich.prompt import Prompt
 from datetime import datetime
-from context_loader import load_knowledge, VastecKnowledge
-from claude_client import ClaudeClient
-from intents import detect_intent
+from .context_loader import load_knowledge, VastecKnowledge
+from .claude_client import ClaudeClient
+from .intents import detect_intent
 import os
 def get_log_path():
     log_dir = "logs"
@@ -32,7 +32,7 @@ def log_interaction(session_id: str, fecha: datetime, pregunta: str, categoria: 
 
 console = Console()
 
-KNOWLEDGE_PATH = "vastec_knowledge.json"
+KNOWLEDGE_PATH = os.path.join(os.path.dirname(__file__), "..", "data", "vastec_knowledge.json")
 
 def cargar_conocimiento():
     try:
@@ -61,9 +61,10 @@ def main():
     history = []
     knowledge = cargar_conocimiento()
     templates = None
-    if os.path.exists("prompt_templates.yml"):
+    template_path = os.path.join(os.path.dirname(__file__), "..", "data", "prompt_templates.yml")
+    if os.path.exists(template_path):
         try:
-            templates = load_templates()
+            templates = load_templates(template_path)
             console.print("[green]Plantillas de prompt cargadas.[/green]")
         except Exception as e:
             console.print(f"[yellow]No se pudieron cargar plantillas: {e}[/yellow]")
@@ -99,7 +100,7 @@ def main():
             categoria = detect_intent(user_input)
             console.print(f"[blue]Categoría detectada:[/blue] [bold]{categoria}[/bold]")
             pregunta_saneada = sanitize_input(user_input)
-            from utils_search import buscar_info_rapida
+            from .utils_search import buscar_info_rapida
             respuesta_directa = buscar_info_rapida(knowledge, pregunta_saneada)
             if respuesta_directa:
                 console.print(f"[bold]Respuesta:[/bold] [italic]{respuesta_directa}[/italic]", style="green")

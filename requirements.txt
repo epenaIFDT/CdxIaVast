@@ -1,5 +1,7 @@
+
 rich
 pydantic
 requests
 python-dotenv
 pytest
+pyyaml

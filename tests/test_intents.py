@@ -1,4 +1,4 @@
-from ..intents import detect_intent
+from app.intents import detect_intent
 
 def test_detect_intent_cliente():
     assert detect_intent("¿Cuál es la garantía?") == "Atención Cliente"

@@ -1,5 +1,5 @@
 import pytest
-from ..claude_client import ClaudeClient
+from app.claude_client import ClaudeClient
 import os
 
 class DummyClaudeClient(ClaudeClient):
@@ -16,5 +16,6 @@ def test_send_message_mock(monkeypatch):
 
 def test_api_key_missing(monkeypatch):
     monkeypatch.delenv("CLAUDE_API_KEY", raising=False)
+    monkeypatch.setattr(os, "getenv", lambda k, default=None: None)
     with pytest.raises(RuntimeError):
         ClaudeClient()

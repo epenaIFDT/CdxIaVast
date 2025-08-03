@@ -1,7 +1,8 @@
 import yaml
-from intents import detect_intent
+from .intents import detect_intent
 
-TEMPLATE_PATH = "prompt_templates.yml"
+import os
+TEMPLATE_PATH = os.path.join(os.path.dirname(__file__), "..", "data", "prompt_templates.yml")
 
 def load_templates(path=TEMPLATE_PATH):
     with open(path, "r", encoding="utf-8") as f:

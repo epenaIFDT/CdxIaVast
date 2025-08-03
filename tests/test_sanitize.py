@@ -1,4 +1,4 @@
-from ..utils import sanitize_input
+from app.utils import sanitize_input
 
 def test_html_removal():
     assert sanitize_input('<b>hola</b>') == 'hola'
