@@ -70,18 +70,24 @@
     }
     #historial {
       margin-top: 24px;
-      max-height: 350px;
+      max-height: 420px;
+      min-height: 180px;
       overflow-y: auto;
-      background: #f8fafd;
-      border-radius: 8px;
-      border: 1px solid #e0e0e0;
-      padding: 12px;
-      box-shadow: 0 1px 4px #2c536420;
+      background: linear-gradient(135deg, #e9f7fe 0%, #f8fafd 100%);
+      border-radius: 12px;
+      border: 1.5px solid #0077cc44;
+      padding: 18px 16px;
+      box-shadow: 0 2px 12px #0077cc22;
+      font-size: 1.08rem;
     }
     .chat-item {
-      margin-bottom: 18px;
-      padding-bottom: 8px;
-      border-bottom: 1px solid #e0e0e0;
+      margin-bottom: 22px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid #cce6ff;
+      background: #fff;
+      border-radius: 8px;
+      box-shadow: 0 1px 4px #0077cc11;
+      padding: 12px 14px;
     }
     .chat-item:last-child {
       border-bottom: none;
@@ -92,6 +98,7 @@
       display: flex;
       align-items: center;
       gap: 6px;
+      font-size: 0.98rem;
     }
     .user .fa-user {
       color: #0077cc;
@@ -102,6 +109,7 @@
       display: flex;
       align-items: center;
       gap: 6px;
+      font-size: 0.98rem;
     }
     .bot .fa-robot {
       color: #2c5364;
@@ -109,6 +117,29 @@
     .respuesta {
       color: #222;
       margin-left: 24px;
+      font-size: 1.08rem;
+      margin-top: 4px;
+      margin-bottom: 4px;
+      line-height: 1.5;
+      word-break: break-word;
+      background: #f8fafd;
+      border-radius: 6px;
+      padding: 8px 12px;
+      border: 1px solid #e0e0e0;
+  }
+  /* Estilo profesional para respuestas del chatbot */
+  .respuesta-bot {
+    background: linear-gradient(90deg, #e9f7fe 0%, #cce6ff 100%);
+    color: #1a2a3a;
+    font-weight: 500;
+    font-size: 0.97rem;
+    border: 1px solid rgba(0,119,204,0.13);
+    box-shadow: 0 1px 3px rgba(0,119,204,0.05);
+    margin-top: 2px;
+    margin-bottom: 2px;
+    padding: 7px 10px;
+    border-radius: 6px;
+    word-break: break-word;
     }
     #consultas-frecuentes {
       margin-top: 24px;
@@ -198,28 +229,64 @@
       ];
 
       function renderEjemplos() {
-        ejemplosUl.innerHTML = '';
-        ejemplos.forEach(ej => {
-          const li = document.createElement('li');
-          li.textContent = ej;
-          li.onclick = () => {
-            document.getElementById('pregunta').value = ej;
-            document.getElementById('pregunta').focus();
-          };
-          ejemplosUl.appendChild(li);
-        });
+    ejemplosUl.innerHTML = '';
+    let mostrarTodos = false;
+    function renderLista() {
+      ejemplosUl.innerHTML = '';
+      const lista = mostrarTodos ? ejemplos : ejemplos.slice(0, 3);
+      lista.forEach(ej => {
+        const li = document.createElement('li');
+        li.textContent = ej;
+        li.onclick = (e) => {
+          e.preventDefault();
+          document.getElementById('pregunta').value = ej;
+          document.getElementById('pregunta').focus();
+        };
+        ejemplosUl.appendChild(li);
+      });
+      // Botón mostrar más/menos
+      let btn = document.getElementById('mostrar-mas');
+      if (!btn) {
+        btn = document.createElement('button');
+        btn.id = 'mostrar-mas';
+        btn.type = 'button';
+        btn.style.marginTop = '10px';
+        btn.style.background = '#e9f7fe';
+        btn.style.color = '#0077cc';
+        btn.style.border = '1px solid #cce6ff';
+        btn.style.borderRadius = '6px';
+        btn.style.padding = '7px 12px';
+        btn.style.fontWeight = '500';
+        btn.style.cursor = 'pointer';
+        ejemplosUl.parentNode.appendChild(btn);
       }
-      renderEjemplos();
+      btn.textContent = mostrarTodos ? 'Mostrar menos consultas' : 'Mostrar más consultas';
+      btn.onclick = (e) => {
+        e.preventDefault();
+        mostrarTodos = !mostrarTodos;
+        renderLista();
+      };
+      btn.style.display = ejemplos.length > 3 ? 'inline-block' : 'none';
+    }
+    renderLista();
+  }
+  renderEjemplos();
 
       function renderHistorial() {
-        historialDiv.innerHTML = historial.map(item =>
-          `<div class="chat-item">
-            <div class="user"><i class="fa-solid fa-user"></i> ${item.timestamp} Tú:</div>
-            <div class="respuesta">${item.pregunta}</div>
-            <div class="bot"><i class="fa-solid fa-robot"></i> ${item.timestamp} Chatbot:</div>
-            <div class="respuesta">${marked.parse(item.respuesta)}</div>
-          </div>`
-        ).join('');
+    historialDiv.innerHTML = historial.map(item => {
+      // Eliminar etiquetas h2 y p del markdown generado por Claude
+      let respuestaLimpia = item.respuesta
+        .replace(/<h2>/g, '<div style="font-weight:600;font-size:1.01rem;margin-bottom:4px;">')
+        .replace(/<\/h2>/g, '</div>')
+        .replace(/<p>/g, '<div style="margin-bottom:4px;">')
+        .replace(/<\/p>/g, '</div>');
+      return `<div class="chat-item">
+        <div class="user"><i class="fa-solid fa-user"></i> ${item.timestamp} Tú:</div>
+        <div class="respuesta">${item.pregunta}</div>
+        <div class="bot"><i class="fa-solid fa-robot"></i> ${item.timestamp} Chatbot:</div>
+        <div class="respuesta respuesta-bot">${respuestaLimpia}</div>
+      </div>`;
+    }).join('');
         // Autoscroll robusto
         setTimeout(() => {
           historialDiv.scrollTop = historialDiv.scrollHeight;
