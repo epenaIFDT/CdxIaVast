@@ -13,11 +13,9 @@ CLAUDE_API_URL = "https://api.anthropic.com/v1/messages"
 
 class ClaudeClient:
     def __init__(self, api_key: Optional[str] = None):
-        # Solo cargar .env si no se pasa api_key explícitamente
-        if api_key is None:
-            load_dotenv()
-        self.api_key = api_key or os.getenv("CLAUDE_API_KEY")
-        if not self.api_key or self.api_key.strip() == "":
+        # Usar solo variable de entorno, compatible con GitHub Actions Secrets
+        self.api_key = api_key if api_key is not None else os.getenv("CLAUDE_API_KEY")
+        if self.api_key is None or self.api_key.strip() == "":
             raise RuntimeError("No se encontró la clave CLAUDE_API_KEY.")
 
     def send_message(self, prompt: str, max_tokens: int = 512, retries: int = 3, backoff: float = 1.0) -> str:

@@ -27,4 +27,4 @@ uvicorn app.api:app --reload
 - Usa `/consulta` para consultas vía API
 
 ## Notas
-- Agrega tu clave Claude API en `.env`
+- La clave Claude API se gestiona ahora como variable de entorno (`CLAUDE_API_KEY`), ideal para GitHub Actions Secrets. No es necesario `.env`.
