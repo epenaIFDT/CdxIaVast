@@ -3,21 +3,14 @@ Funciones utilitarias para búsqueda directa en la base de conocimiento Vastec.
 """
 
 def buscar_info_rapida(knowledge, pregunta: str) -> str:
-    # Liderazgo: gerente general y ejecutivos
-    if (
-        "gerente" in pregunta or "general" in pregunta or "director" in pregunta or "jefe" in pregunta or "ejecutivo" in pregunta or "lider" in pregunta or "líder" in pregunta or "manager" in pregunta or "administrador" in pregunta
-    ):
-        ld = getattr(knowledge, "leadership", None)
-        partes = []
-        if ld:
-            if hasattr(ld, "current_general_manager") and ld.current_general_manager:
-                partes.append(f"Gerente general: {ld.current_general_manager}")
-            if hasattr(ld, "other_key_executives") and ld.other_key_executives:
-                otros = [f"{e.name} ({e.position})" for e in ld.other_key_executives if hasattr(e, "name") and hasattr(e, "position")]
-                if otros:
-                    partes.append(f"Otros ejecutivos: {', '.join(otros)}")
-        if partes:
-            return " | ".join(partes)
+    """
+    Realiza una búsqueda directa en el objeto de conocimiento.
+
+    La implementación original era sensible a mayúsculas, por lo que preguntas
+    escritas en mayúsculas no encontraban coincidencias. Para hacerlo robusto
+    normalizamos la pregunta antes de evaluar las palabras clave.
+    """
+    pregunta = pregunta.casefold()
     import unicodedata
     def normaliza(texto):
         texto = texto.lower()
@@ -238,115 +231,4 @@ def buscar_info_rapida(knowledge, pregunta: str) -> str:
         ejemplos = ["¿Qué información tiene Vastec?"]
     mensaje = "No se tiene información sobre ese tema en la base de conocimiento. Puedes preguntar cualquier tema referente a Vastec y con gusto atenderé tu pedido.\nEjemplos de preguntas válidas:\n- " + "\n- ".join(ejemplos)
     return mensaje
-    pregunta = pregunta.lower()
-    # Contacto
-    if "teléfono" in pregunta or "telefono" in pregunta:
-        sales = getattr(getattr(knowledge, "contact_information", None), "sales", None)
-        tech = getattr(getattr(knowledge, "contact_information", None), "technical_support", None)
-        if sales and tech:
-            return f"Ventas: {sales.phone} | Soporte técnico: {tech.phone}"
-        elif sales:
-            return f"Ventas: {sales.phone}"
-        elif tech:
-            return f"Soporte técnico: {tech.phone}"
-    if "email" in pregunta or "correo" in pregunta:
-        sales = getattr(getattr(knowledge, "contact_information", None), "sales", None)
-        tech = getattr(getattr(knowledge, "contact_information", None), "technical_support", None)
-        if sales and tech:
-            return f"Ventas: {sales.email} | Soporte técnico: {tech.email}"
-        elif sales:
-            return f"Ventas: {sales.email}"
-        elif tech:
-            return f"Soporte técnico: {tech.email}"
-    if "horario" in pregunta or "atención" in pregunta or "atencion" in pregunta:
-        sales = getattr(getattr(knowledge, "contact_information", None), "sales", None)
-        tech = getattr(getattr(knowledge, "contact_information", None), "technical_support", None)
-        if sales and tech:
-            return f"Ventas: {sales.hours} | Soporte técnico: {tech.hours}"
-        elif sales:
-            return f"Ventas: {sales.hours}"
-        elif tech:
-            return f"Soporte técnico: {tech.hours}"
-    if "dirección" in pregunta or "direccion" in pregunta or "ubicación" in pregunta or "ubicacion" in pregunta:
-        hq = getattr(knowledge, "headquarters", None)
-        if hq and hasattr(hq, "address"):
-            return f"Dirección: {hq.address}"
-    if "sitio web" in pregunta or "web" in pregunta:
-        hq = getattr(knowledge, "headquarters", None)
-        if hq and hasattr(hq, "website"):
-            return f"Sitio web: {hq.website}"
-    # Productos
-    if "producto" in pregunta or "productos" in pregunta or "catálogo" in pregunta or "catalogo" in pregunta:
-        ps = getattr(knowledge, "products_services", None)
-        if ps:
-            computo = getattr(ps, "computo", [])
-            soluciones = getattr(ps, "soluciones_ti", [])
-            perifericos = getattr(ps, "perifericos", [])
-            return f"Cómputo: {', '.join(computo)} | Soluciones TI: {', '.join(soluciones)} | Periféricos: {', '.join(perifericos)}"
-    # Canales de distribución y variantes
-    if (
-        "distribuidor" in pregunta or "distribuidores" in pregunta or
-        "mayorista" in pregunta or "retail" in pregunta or "partner" in pregunta or
-        "canal" in pregunta or "canales" in pregunta or "red" in pregunta or
-        "estrategia" in pregunta or "comercialización" in pregunta or "comercializacion" in pregunta or
-        "reseller" in pregunta or "autorizado" in pregunta or "punto de venta" in pregunta or "venta" in pregunta
-    ):
-        dc = getattr(knowledge, "distribution_channels", None)
-        if dc:
-            mayorista = getattr(dc, "national_distributor", None)
-            retail = getattr(dc, "retail_partners", [])
-            estrategia = getattr(dc, "strategy", None)
-            red = getattr(dc, "authorized_reseller_network", None)
-            partes = []
-            if estrategia:
-                partes.append(f"Estrategia: {estrategia}")
-            if mayorista:
-                partes.append(f"Mayorista: {mayorista}")
-            if retail:
-                partes.append(f"Retail: {', '.join(retail)}")
-            if red:
-                partes.append(f"Red de resellers: {red}")
-            if partes:
-                return " | ".join(partes)
-    # Certificaciones
-    if "certificación" in pregunta or "certificaciones" in pregunta:
-        certs = getattr(knowledge, "certifications", [])
-        if certs:
-            return f"Certificaciones: {', '.join(certs)}"
-    # Garantía
-    if "garantía" in pregunta or "garantia" in pregunta:
-        cc = getattr(getattr(knowledge, "products_services", None), "caracteristicas_clave", None)
-        if cc and hasattr(cc, "garantia"):
-            return f"Garantía: {cc.garantia}"
-    # Historia
-    if "historia" in pregunta or "evento" in pregunta or "fundación" in pregunta or "fundacion" in pregunta:
-        ch = getattr(knowledge, "corporate_history", [])
-        if ch and hasattr(ch[0], "event"):
-            eventos = [f"{h.date}: {h.event}" for h in ch]
-            return "Eventos clave: " + "; ".join(eventos)
-    # Preguntas frecuentes
-    if "pregunta frecuente" in pregunta or "faq" in pregunta:
-        faqs = getattr(knowledge, "frequently_asked_questions", [])
-        if faqs and hasattr(faqs[0], "question"):
-            preguntas = [f"{f.question}" for f in faqs]
-            return "Preguntas frecuentes: " + "; ".join(preguntas)
-    # Misión y visión
-    if "misión" in pregunta or "mision" in pregunta:
-        mv = getattr(knowledge, "mission_vision", None)
-        if mv and hasattr(mv, "mission"):
-            return f"Misión: {mv.mission}"
-    if "visión" in pregunta or "vision" in pregunta:
-        mv = getattr(knowledge, "mission_vision", None)
-        if mv and hasattr(mv, "vision"):
-            return f"Visión: {mv.vision}"
-    # Alianzas
-    if "alianza" in pregunta or "socios" in pregunta or "partners" in pregunta:
-        al = getattr(knowledge, "alliances", [])
-        if al:
-            return f"Alianzas tecnológicas: {', '.join(al)}"
-    # Segmentos de mercado
-    if "segmento" in pregunta or "mercado" in pregunta or "clientes" in pregunta:
-        mp = getattr(knowledge, "market_presence", None)
-        if mp and hasattr(mp, "primary_segments"):
-            return f"Segmentos principales: {', '.join(mp.primary_segments)}"
-    return None
+
