@@ -9,3 +9,9 @@ if __name__ == "__main__":
         main_cli()
     else:
         from app.api import app
+
+# Para ejecución con Uvicorn
+try:
+    from app.api import app
+except ImportError:
+    app = None

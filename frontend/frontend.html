@@ -19,6 +19,33 @@
       border-radius: 16px;
       box-shadow: 0 4px 24px #0f2027cc;
       border: 1px solid #e0e0e0;
+      transition: box-shadow 0.2s;
+    }
+    @media (max-width: 900px) {
+      .container {
+        max-width: 98vw;
+        margin-top: 18px;
+        padding: 18px 6vw;
+      }
+      h2 {
+        font-size: 1.3rem;
+      }
+    }
+    @media (max-width: 600px) {
+      .container { max-width: 99vw; padding: 8vw 2vw; margin-top: 8px; }
+      h2 { font-size: 1rem; }
+      #historial, #historial .chat-item, #historial .user, #historial .bot, #historial .respuesta, #historial .respuesta-bot {
+        font-size: 0.45rem !important;
+        line-height: 1.35;
+      }
+      #historial { min-height: 120px; padding: 8px 4px; }
+      #historial .chat-item { padding: 7px 5px; margin-bottom: 10px; }
+      #historial .user, #historial .bot { gap: 4px; }
+      #historial .respuesta, #historial .respuesta-bot { padding: 5px 7px; word-break: break-word; }
+      #consultas-frecuentes { max-height: 110px; padding: 8px 6px; overflow-y: auto; font-size: 0.92rem; }
+      #consultas-frecuentes li { font-size: 0.92rem; padding: 5px 7px; }
+      input[type="text"] { font-size: 0.92rem; padding: 6px 8px; }
+      button { font-size: 0.92rem; padding: 7px 10px; }
     }
     h2 {
       color: #0f2027;
@@ -79,6 +106,7 @@
       padding: 18px 16px;
       box-shadow: 0 2px 12px #0077cc22;
       font-size: 1.08rem;
+      word-break: break-word;
     }
     .chat-item {
       margin-bottom: 22px;
@@ -98,14 +126,15 @@
       display: flex;
       align-items: center;
       gap: 6px;
-      font-size: 0.98rem;
-    }
-    .user .fa-user {
-      color: #0077cc;
-    }
-    .bot {
-      color: #0077cc;
-      font-weight: bold;
+      font-size: 1.08rem;
+      padding: 8px 12px;
+      border-radius: 6px;
+      border: 1px solid #b0b0b0;
+      width: 100%;
+      margin-top: 4px;
+      margin-bottom: 12px;
+      transition: border-color 0.2s;
+      outline: none;
       display: flex;
       align-items: center;
       gap: 6px;
@@ -132,14 +161,20 @@
     background: linear-gradient(90deg, #e9f7fe 0%, #cce6ff 100%);
     color: #1a2a3a;
     font-weight: 500;
-    font-size: 0.97rem;
-    border: 1px solid rgba(0,119,204,0.13);
-    box-shadow: 0 1px 3px rgba(0,119,204,0.05);
-    margin-top: 2px;
-    margin-bottom: 2px;
-    padding: 7px 10px;
-    border-radius: 6px;
-    word-break: break-word;
+      font-size: 1.08rem;
+      padding: 8px 18px;
+      border-radius: 6px;
+      border: none;
+      background: linear-gradient(90deg, #0077cc 0%, #2c5364 100%);
+      color: #fff;
+      font-weight: 600;
+      cursor: pointer;
+      margin-bottom: 4px;
+      transition: background 0.2s;
+      outline: none;
+    }
+    button:active {
+      background: #005fa3;
     }
     #consultas-frecuentes {
       margin-top: 24px;
@@ -148,6 +183,11 @@
       padding: 16px 14px;
       box-shadow: 0 1px 4px #0077cc22;
       border: 1px solid #cce6ff;
+      max-height: 140px;
+      overflow-y: auto;
+      transition: box-shadow 0.2s;
+      scrollbar-width: thin;
+      scrollbar-color: #0077cc #e9f7fe;
     }
     #consultas-frecuentes h3 {
       color: #0077cc;
@@ -159,9 +199,7 @@
       list-style: none;
       padding: 0;
       margin: 0;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
+      display: block;
     }
     #consultas-frecuentes li {
       background: #fff;
@@ -173,10 +211,46 @@
       cursor: pointer;
       transition: background 0.2s, color 0.2s;
       box-shadow: 0 1px 2px #0077cc11;
+      margin-bottom: 6px;
+      width: 100%;
+      box-sizing: border-box;
     }
     #consultas-frecuentes li:hover {
       background: #0077cc;
       color: #fff;
+    }
+    @media (max-width: 600px) {
+      .container {
+        max-width: 99vw;
+        padding: 8vw 2vw;
+      }
+      #consultas-frecuentes {
+        max-height: 90px;
+        padding: 8px 6px;
+      }
+      #consultas-frecuentes li {
+        font-size: 0.97rem;
+        padding: 6px 8px;
+      }
+    }
+  </style>
+  <style>
+    /* Estilos móviles al final para máxima prioridad */
+    @media (max-width: 600px) {
+      .container { max-width: 99vw; padding: 8vw 2vw; margin-top: 8px; }
+      h2 { font-size: 1rem; }
+      #historial, #historial .chat-item, #historial .user, #historial .bot, #historial .respuesta, #historial .respuesta-bot {
+        font-size: 0.45rem !important;
+        line-height: 1.35;
+      }
+      #historial { min-height: 120px; padding: 8px 4px; }
+      #historial .chat-item { padding: 7px 5px; margin-bottom: 10px; }
+      #historial .user, #historial .bot { gap: 4px; }
+      #historial .respuesta, #historial .respuesta-bot { padding: 5px 7px; word-break: break-word; }
+      #consultas-frecuentes { max-height: 110px; padding: 8px 6px; overflow-y: auto; font-size: 0.92rem; }
+      #consultas-frecuentes li { font-size: 0.92rem; padding: 5px 7px; }
+      input[type="text"] { font-size: 0.92rem; padding: 6px 8px; }
+      button { font-size: 0.92rem; padding: 7px 10px; }
     }
   </style>
 </head>
@@ -228,13 +302,7 @@
         '¿Qué servicios de postventa tienen?'
       ];
 
-      function renderEjemplos() {
-    ejemplosUl.innerHTML = '';
-    let mostrarTodos = false;
-    function renderLista() {
-      ejemplosUl.innerHTML = '';
-      const lista = mostrarTodos ? ejemplos : ejemplos.slice(0, 3);
-      lista.forEach(ej => {
+      function renderEjemploItem(ej) {
         const li = document.createElement('li');
         li.textContent = ej;
         li.onclick = (e) => {
@@ -242,54 +310,58 @@
           document.getElementById('pregunta').value = ej;
           document.getElementById('pregunta').focus();
         };
-        ejemplosUl.appendChild(li);
-      });
-      // Botón mostrar más/menos
-      let btn = document.getElementById('mostrar-mas');
-      if (!btn) {
-        btn = document.createElement('button');
-        btn.id = 'mostrar-mas';
-        btn.type = 'button';
-        btn.style.marginTop = '10px';
-        btn.style.background = '#e9f7fe';
-        btn.style.color = '#0077cc';
-        btn.style.border = '1px solid #cce6ff';
-        btn.style.borderRadius = '6px';
-        btn.style.padding = '7px 12px';
-        btn.style.fontWeight = '500';
-        btn.style.cursor = 'pointer';
-        ejemplosUl.parentNode.appendChild(btn);
+        return li;
       }
-      btn.textContent = mostrarTodos ? 'Mostrar menos consultas' : 'Mostrar más consultas';
-      btn.onclick = (e) => {
-        e.preventDefault();
-        mostrarTodos = !mostrarTodos;
-        renderLista();
-      };
-      btn.style.display = ejemplos.length > 3 ? 'inline-block' : 'none';
-    }
-    renderLista();
-  }
-  renderEjemplos();
+
+      function renderEjemplos(mostrarTodos = false) {
+        ejemplosUl.innerHTML = '';
+        const lista = mostrarTodos ? ejemplos : ejemplos.slice(0, 3);
+        lista.forEach(ej => ejemplosUl.appendChild(renderEjemploItem(ej)));
+        let btn = document.getElementById('mostrar-mas');
+        if (!btn) {
+          btn = document.createElement('button');
+          btn.id = 'mostrar-mas';
+          btn.type = 'button';
+          btn.style.marginTop = '10px';
+          btn.style.background = '#e9f7fe';
+          btn.style.color = '#0077cc';
+          btn.style.border = '1px solid #cce6ff';
+          btn.style.borderRadius = '6px';
+          btn.style.padding = '7px 12px';
+          btn.style.fontWeight = '500';
+          btn.style.cursor = 'pointer';
+          ejemplosUl.parentNode.appendChild(btn);
+        }
+        btn.textContent = mostrarTodos ? 'Mostrar menos consultas' : 'Mostrar más consultas';
+        btn.onclick = (e) => {
+          e.preventDefault();
+          renderEjemplos(!mostrarTodos);
+        };
+        btn.style.display = ejemplos.length > 3 ? 'inline-block' : 'none';
+      }
+      renderEjemplos();
 
       function renderHistorial() {
-    historialDiv.innerHTML = historial.map(item => {
-      // Eliminar etiquetas h2 y p del markdown generado por Claude
-      let respuestaLimpia = item.respuesta
-        .replace(/<h2>/g, '<div style="font-weight:600;font-size:1.01rem;margin-bottom:4px;">')
-        .replace(/<\/h2>/g, '</div>')
-        .replace(/<p>/g, '<div style="margin-bottom:4px;">')
-        .replace(/<\/p>/g, '</div>');
-      return `<div class="chat-item">
-        <div class="user"><i class="fa-solid fa-user"></i> ${item.timestamp} Tú:</div>
-        <div class="respuesta">${item.pregunta}</div>
-        <div class="bot"><i class="fa-solid fa-robot"></i> ${item.timestamp} Chatbot:</div>
-        <div class="respuesta respuesta-bot">${respuestaLimpia}</div>
-      </div>`;
-    }).join('');
-        // Autoscroll robusto
+        historialDiv.innerHTML = historial.map((item, idx) => {
+          let respuestaLimpia = item.respuesta
+            .replace(/<h2>/g, '<div style="font-weight:600;font-size:1.01rem;margin-bottom:4px;">')
+            .replace(/<\/h2>/g, '</div>')
+            .replace(/<p>/g, '<div style="margin-bottom:4px;">')
+            .replace(/<\/p>/g, '</div>');
+          return `<div class="chat-item" id="chat-item-${idx}">
+            <div class="user"><i class="fa-solid fa-user"></i> ${item.timestamp} Tú:</div>
+            <div class="respuesta">${item.pregunta}</div>
+            <div class="bot"><i class="fa-solid fa-robot"></i> ${item.timestamp} Chatbot:</div>
+            <div class="respuesta respuesta-bot">${respuestaLimpia}</div>
+          </div>`;
+        }).join('');
         setTimeout(() => {
-          historialDiv.scrollTop = historialDiv.scrollHeight;
+          const last = document.getElementById(`chat-item-${historial.length-1}`);
+          if (last) {
+            last.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          } else {
+            historialDiv.scrollTop = historialDiv.scrollHeight;
+          }
         }, 50);
       }
       renderHistorial();
